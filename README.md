@@ -8,8 +8,8 @@
 
 ## 二、环境信息（已配置，供核对）
 
-- **小程序 AppID** ：`wx3b9e1e57123ee083`
-- **云开发环境 ID** ：`cloud1-d1g9cdbaf154ee432`
+- **小程序 AppID** ：`你的小程序AppID`
+- **云开发环境 ID** ：`你的云开发环境ID`
 - **微信地图 Key** ：通过云函数环境变量 `MAP_KEY` 提供（生产推荐，避免硬编码泄露）。在云开发控制台 → 对应云函数「nearbyShops」→ 环境变量 设置 `MAP_KEY=你的腾讯地图Key`（WebServiceAPI 类型）。（Key 仅在服务端云函数内使用，不会进入前端包 / 代码仓库。）
 - **代码入口** ：`miniprogram/app.js` 已 init 上述环境 ID。
 
@@ -59,7 +59,7 @@ D:\tmp\XCX\
 ## 七、常见坑（务必看）
 
 1. **云函数依赖丢失**（报错 `Cannot find module 'wx-server-sdk'`）：用「创建并部署所有文件 / 普通上传」只传代码、不装依赖。解决：右键函数选「上传并部署：云端安装依赖」（或「全量上传 node_modules」）。凡是改动过某个云函数代码再重传，都必须选这两项之一。
-2. **上传报「请在云函数根目录选择一个云环境」**：`cloudfunctionRoot` 未绑定环境。本机 `project.private.config.json` 已写好绑定 `cloud1-d1g9cdbaf154ee432`；若 IDE 仍报错，关闭项目重新导入根目录。
+2. **上传报「请在云函数根目录选择一个云环境」**：`cloudfunctionRoot` 未绑定环境。本机 `project.private.config.json` 已写好绑定 `你的云开发环境ID`；若 IDE 仍报错，关闭项目重新导入根目录。
 3. **地图报「boundary 不合法」**：该接口要求 `boundary=nearby(纬度,经度,半径)`，不用 `location/radius`。代码已修。
 4. **地图报「KEY 每日调用量已达上限」**：WebServiceAPI 免费额度低。去 lbs.qq.com 做实名认证提额，或换新 Key 更新环境变量 `MAP_KEY`。`nearbyShops` 已带缓存，正常点几下不会烧光。
 5. **真机查店失败 / 被拦截**：小程序后台「开发管理 → 开发设置 → 服务器域名 → request 合法域名」加 `https://apis.map.qq.com`。开发者工具勾"不校验域名"能跑，但真机必须配。

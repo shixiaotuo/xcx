@@ -11,8 +11,8 @@
 
 二、环境信息（已配置，供核对）
 ----------------------------------------------------------------
-- 小程序 AppID   ：wx3b9e1e57123ee083
-- 云开发环境 ID ：cloud1-d1g9cdbaf154ee432
+- 小程序 AppID   ：你的小程序AppID
+- 云开发环境 ID ：你的云开发环境ID
 - 微信地图 Key   ：通过云函数环境变量 MAP_KEY 提供（生产推荐，避免硬编码泄露）。
                    在云开发控制台 → 对应云函数「nearbyShops」→ 环境变量 设置
                    MAP_KEY=你的腾讯地图Key（WebServiceAPI 类型）。
@@ -88,7 +88,7 @@ D:\tmp\XCX\
 
 ② 上传报「请在云函数根目录选择一个云环境」
    原因：cloudfunctionRoot 未绑定环境。本机 project.private.config.json 已写好
-   绑定 cloud1-d1g9cdbaf154ee432；若 IDE 仍报错，关闭项目重新导入 D:\tmp\XCX。
+   绑定 你的云开发环境ID；若 IDE 仍报错，关闭项目重新导入 D:\tmp\XCX。
 
 ③ 地图报「boundary 不合法」
    该接口要求 boundary=nearby(纬度,经度,半径)，不用 location/radius。代码已修。
