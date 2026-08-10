@@ -1,0 +1,86 @@
+<view class="container theme-{{theme}}">
+  <view class="header">
+    <view class="header-top">
+      <view class="date">{{date}}</view>
+      <view class="header-actions">
+        <view class="style-btn" bindtap="openThemeSheet">🎨 风格</view>
+        <view class="history-btn" bindtap="goHistory">📜 历史</view>
+      </view>
+    </view>
+    <view class="title">今天吃点啥子？</view>
+    <view class="subtitle" wx:if="{{excludedYesterday}}">已帮你避开昨天吃的：{{excludedYesterday}}</view>
+    <view class="subtitle" wx:else>饭前不纠结，吃前摇一摇。</view>
+  </view>
+
+  <view class="cards">
+    <view
+      class="card {{activeId === item._id ? 'card-active' : ''}}"
+      wx:for="{{picks}}"
+      wx:key="_id"
+      bindtap="onPick"
+      data-id="{{item._id}}"
+      data-keyword="{{item.mapKeyword}}">
+      <view class="emoji">{{item.emoji}}</view>
+      <view class="name">{{item.name}}</view>
+      <view class="chevron" wx:if="{{activeId === item._id}}">›</view>
+    </view>
+  </view>
+
+  <button class="reroll" bindtap="onReroll" loading="{{rerolling}}">🎲 换一批</button>
+
+  <view class="shops" wx:if="{{shops.length}}">
+    <view class="shops-title">附近「{{activeName}}」的店</view>
+    <view class="sort-tabs">
+      <view class="sort-tab {{sort === 'default' ? 'sort-active' : ''}}" bindtap="onSortChange" data-sort="default">综合</view>
+      <view class="sort-tab {{sort === 'distance' ? 'sort-active' : ''}}" bindtap="onSortChange" data-sort="distance">距离最近</view>
+    </view>
+    <view
+      class="shop"
+      wx:for="{{shops}}"
+      wx:key="id"
+      bindtap="onOpenMap"
+      data-lat="{{item.lat}}"
+      data-lng="{{item.lng}}"
+      data-name="{{item.name}}">
+      <view class="shop-name">{{item.name}}</view>
+      <view class="shop-meta">{{item.distText}} · {{item.address}}</view>
+    </view>
+  </view>
+
+  <view class="home" wx:if="{{isHome}}">
+    <view class="home-emoji">🏠</view>
+    <view class="home-title">今天回家吃～</view>
+    <view class="home-tip">不搜周边店啦，回家好好吃一顿</view>
+  </view>
+
+  <view class="home takeout" wx:if="{{isTakeout}}">
+    <view class="home-emoji">🥡</view>
+    <view class="home-title">今天点外卖～</view>
+    <view class="home-tip">打开外卖 App，躺着等送达</view>
+  </view>
+
+  <view class="empty" wx:if="{{!shops.length && !loading && !isHome && !isTakeout}}">
+    <view class="empty-tip">点上面的卡片，看看附近有啥店 👆</view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <view class="empty-tip">加载中…</view>
+  </view>
+
+  <view class="sheet-mask" wx:if="{{sheetShow}}" bindtap="closeThemeSheet"></view>
+  <view class="sheet" wx:if="{{sheetShow}}" catchtap="noop">
+    <view class="sheet-title">选择风格</view>
+    <view class="theme-grid">
+      <view
+        class="theme-opt {{theme === item.key ? 'active' : ''}}"
+        wx:for="{{themes}}"
+        wx:key="key"
+        bindtap="onThemeChange"
+        data-key="{{item.key}}">
+        <view class="theme-swatch" style="background:{{item.swatch}}"></view>
+        <view class="theme-name">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+  <privacy-popup />
+</view>

@@ -1,0 +1,137 @@
+page {
+  /* 默认主题 = INS（莫兰迪雾粉） */
+  --bg: #F7F4F0;
+  --card: #FFFFFF;
+  --primary: #C99BA0;
+  --primary-soft: #FBF1F0;
+  --primary-border: #E3CFCB;
+  --text: #3D3A37;
+  --text-sub: #A89E94;
+  --border: #EFEAE3;
+  --border-w: 1rpx;
+  --shadow: 0 8rpx 24rpx rgba(150, 140, 130, 0.08);
+  --shadow-active: 0 8rpx 24rpx rgba(201, 160, 166, 0.18);
+  --home-bg: #FBF1F0;
+  --home-border: #EBD9D6;
+  --takeout-bg: #EDF2F4;
+  --takeout-border: #D7E2E7;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+/* ===== 6 套可切换主题（挂在 .container 上） ===== */
+.theme-ins {
+  --bg: #F7F4F0; --card: #FFFFFF; --primary: #C99BA0; --primary-soft: #FBF1F0; --primary-border: #E3CFCB;
+  --text: #3D3A37; --text-sub: #A89E94; --border: #EFEAE3; --border-w: 1rpx;
+  --shadow: 0 8rpx 24rpx rgba(150, 140, 130, 0.08); --shadow-active: 0 8rpx 24rpx rgba(201, 160, 166, 0.18);
+  --home-bg: #FBF1F0; --home-border: #EBD9D6; --takeout-bg: #EDF2F4; --takeout-border: #D7E2E7;
+}
+.theme-fogblue {
+  --bg: #F2F5F6; --card: #FFFFFF; --primary: #8FB3C0; --primary-soft: #EDF2F4; --primary-border: #CFE0E5;
+  --text: #353C3F; --text-sub: #98A2A6; --border: #E6EBEC; --border-w: 1rpx;
+  --shadow: 0 8rpx 24rpx rgba(120, 140, 150, 0.08); --shadow-active: 0 8rpx 24rpx rgba(143, 179, 192, 0.18);
+  --home-bg: #EDF2F4; --home-border: #D7E2E7; --takeout-bg: #EDEFF0; --takeout-border: #DDE1E3;
+}
+.theme-apricot {
+  --bg: #FAF3EC; --card: #FFFFFF; --primary: #D9A979; --primary-soft: #FBF0E4; --primary-border: #ECD9C4;
+  --text: #4A3F37; --text-sub: #B0A294; --border: #F0E6DC; --border-w: 1rpx;
+  --shadow: 0 8rpx 24rpx rgba(170, 150, 130, 0.10); --shadow-active: 0 8rpx 24rpx rgba(217, 169, 121, 0.18);
+  --home-bg: #FBF0E4; --home-border: #EAD9C6; --takeout-bg: #F1ECE4; --takeout-border: #E2D8CC;
+}
+.theme-comic {
+  --bg: #FFF6E9; --card: #FFFDF7; --primary: #FF7A9C; --primary-soft: #FFE3EC; --primary-border: #2B2B2B;
+  --text: #2B2B2B; --text-sub: #7A6A5E; --border: #2B2B2B; --border-w: 3rpx;
+  --shadow: 6rpx 6rpx 0 #2B2B2B; --shadow-active: 3rpx 3rpx 0 #2B2B2B;
+  --home-bg: #FFD93D; --home-border: #2B2B2B; --takeout-bg: #6FC8ED; --takeout-border: #2B2B2B;
+}
+.theme-minimal {
+  --bg: #FAFAFA; --card: #FFFFFF; --primary: #333333; --primary-soft: #F2F2F2; --primary-border: #E0E0E0;
+  --text: #222222; --text-sub: #999999; --border: #ECECEC; --border-w: 1rpx;
+  --shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05); --shadow-active: 0 4rpx 16rpx rgba(0, 0, 0, 0.10);
+  --home-bg: #F2F2F2; --home-border: #E0E0E0; --takeout-bg: #F2F2F2; --takeout-border: #E0E0E0;
+}
+.theme-dark {
+  --bg: #1A1A1C; --card: #26262A; --primary: #E8A0B0; --primary-soft: #2E262B; --primary-border: #4A3A40;
+  --text: #EDEDED; --text-sub: #9A9AA0; --border: #38383D; --border-w: 1rpx;
+  --shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.40); --shadow-active: 0 8rpx 24rpx rgba(232, 160, 176, 0.25);
+  --home-bg: #2E262B; --home-border: #4A3A40; --takeout-bg: #1E2A33; --takeout-border: #2A3A45;
+}
+
+/* ===== 通用：风格切换按钮 + 底部面板 ===== */
+.style-btn {
+  font-size: 25rpx;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--card);
+  border: var(--border-w) solid var(--border);
+  border-radius: 999rpx;
+  padding: 10rpx 26rpx;
+  box-shadow: var(--shadow);
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 24rpx;
+}
+.sheet-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 50;
+}
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 51;
+  background: var(--card);
+  border-radius: 28rpx 28rpx 0 0;
+  padding: 36rpx 32rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -8rpx 30rpx rgba(0, 0, 0, 0.18);
+}
+.sheet-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 28rpx;
+}
+.theme-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18rpx;
+}
+.theme-opt {
+  width: calc((100% - 36rpx) / 3);
+  box-sizing: border-box;
+  border: var(--border-w) solid var(--border);
+  border-radius: 18rpx;
+  padding: 22rpx 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  background: var(--card);
+}
+.theme-opt.active {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-active);
+}
+.theme-swatch {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 999rpx;
+  border: var(--border-w) solid var(--border);
+}
+.theme-name {
+  font-size: 24rpx;
+  color: var(--text);
+  font-weight: 600;
+}

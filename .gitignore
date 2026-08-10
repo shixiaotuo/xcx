@@ -1,0 +1,15 @@
+# 依赖（云函数依赖通过「云端安装依赖」部署，不入库）
+node_modules/
+cloudfunctions/*/node_modules/
+miniprogram_npm/
+
+# 项目记忆（含本地工作日志，不入库）
+.workbuddy/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# 微信开发者工具私有配置（含本机环境绑定，按团队习惯通常不提交）
+project.private.config.json

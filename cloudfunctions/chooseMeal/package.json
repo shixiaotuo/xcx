@@ -1,0 +1,9 @@
+{
+  "name": "chooseMeal",
+  "version": "1.0.0",
+  "description": "记录用户当天选中的餐别",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

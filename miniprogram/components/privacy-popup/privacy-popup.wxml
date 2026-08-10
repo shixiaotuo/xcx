@@ -1,0 +1,14 @@
+<view class="pp-mask" wx:if="{{show}}">
+  <view class="pp-dialog">
+    <view class="pp-title">用户隐私保护提示</view>
+    <view class="pp-body">
+      感谢使用「要吃啥子」！我们非常重视您的个人信息和隐私保护。在继续使用前，请阅读并同意
+      <text class="pp-link" bindtap="openContract">{{name}}</text>。
+      我们仅在您选定餐别后获取当前位置，用于推荐周边的餐厅店铺。
+    </view>
+    <view class="pp-actions">
+      <view class="pp-btn pp-btn-default" bindtap="handleDisagree">拒绝</view>
+      <view class="pp-btn pp-btn-primary" bindtap="handleAgree">同意并继续</view>
+    </view>
+  </view>
+</view>

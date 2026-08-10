@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "历史记录",
+  "navigationBarBackgroundColor": "#eef6f0",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#f7faf7",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "privacy-popup": "/components/privacy-popup/privacy-popup"
+  }
+}

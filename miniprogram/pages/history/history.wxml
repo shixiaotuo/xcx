@@ -1,0 +1,41 @@
+<view class="container theme-{{theme}}">
+  <view class="topbar">
+    <view class="style-btn" bindtap="openThemeSheet">🎨 风格</view>
+  </view>
+  <view class="hint">最近 14 天的午餐记录</view>
+
+  <view class="loading" wx:if="{{loading}}">加载中…</view>
+
+  <view class="empty" wx:if="{{!loading && !list.length}}">还没有记录，今天先选一餐吧 🍽️</view>
+
+  <view class="day" wx:for="{{list}}" wx:key="date">
+    <view class="day-head">
+      <view class="day-date">{{item.date}}</view>
+      <view class="day-chosen" wx:if="{{item.chosenName}}">
+        <text class="chosen-emoji">{{item.chosenEmoji}}</text>
+        <text class="chosen-label">吃了 {{item.chosenName}}</text>
+      </view>
+      <view class="day-chosen day-none" wx:else>还没选</view>
+    </view>
+    <view class="day-picks" wx:if="{{item.picks.length}}">
+      <text class="pick" wx:for="{{item.picks}}" wx:for-item="p" wx:key="name">{{p.emoji}} {{p.name}}</text>
+    </view>
+  </view>
+
+  <view class="sheet-mask" wx:if="{{sheetShow}}" bindtap="closeThemeSheet"></view>
+  <view class="sheet" wx:if="{{sheetShow}}" catchtap="noop">
+    <view class="sheet-title">选择风格</view>
+    <view class="theme-grid">
+      <view
+        class="theme-opt {{theme === item.key ? 'active' : ''}}"
+        wx:for="{{themes}}"
+        wx:key="key"
+        bindtap="onThemeChange"
+        data-key="{{item.key}}">
+        <view class="theme-swatch" style="background:{{item.swatch}}"></view>
+        <view class="theme-name">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+  <privacy-popup />
+</view>

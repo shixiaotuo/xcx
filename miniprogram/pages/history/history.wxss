@@ -1,0 +1,76 @@
+/* ===== 全部色值走 CSS 变量，主题由 .container 上的 .theme-xxx 切换 ===== */
+.container {
+  padding: 36rpx 32rpx 90rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: var(--bg);
+}
+.hint {
+  font-size: 25rpx;
+  color: var(--text-sub);
+  font-weight: 500;
+  margin-bottom: 28rpx;
+}
+.loading,
+.empty {
+  text-align: center;
+  color: var(--text-sub);
+  font-size: 27rpx;
+  font-weight: 500;
+  margin-top: 80rpx;
+}
+
+.day {
+  background: var(--card);
+  border: var(--border-w) solid var(--border);
+  border-radius: 24rpx;
+  padding: 30rpx 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: var(--shadow);
+}
+.day-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.day-date {
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+.day-chosen {
+  display: flex;
+  align-items: center;
+  font-size: 25rpx;
+  color: var(--text);
+  font-weight: 600;
+  background: var(--primary-soft);
+  border: var(--border-w) solid var(--primary-border);
+  border-radius: 999rpx;
+  padding: 6rpx 18rpx;
+}
+.chosen-emoji {
+  margin-right: 8rpx;
+  font-size: 28rpx;
+}
+.day-none {
+  color: var(--text-sub);
+  font-weight: 500;
+  background: var(--card);
+  border-color: var(--border);
+}
+.day-picks {
+  margin-top: 18rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+.pick {
+  font-size: 23rpx;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--primary-soft);
+  border: var(--border-w) solid var(--primary-border);
+  border-radius: 999rpx;
+  padding: 8rpx 20rpx;
+}

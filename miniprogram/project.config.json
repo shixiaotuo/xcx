@@ -1,0 +1,17 @@
+{
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "projectname": "yaochisha",
+  "appid": "wx3b9e1e57123ee083",
+  "description": "要吃啥 - 午餐决策助手。请将 appid 改为你自己的小程序 AppID，并在 app.js 中填入 CloudBase 环境 ID。",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "latest"
+}

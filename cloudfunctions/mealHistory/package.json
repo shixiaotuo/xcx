@@ -1,0 +1,9 @@
+{
+  "name": "mealHistory",
+  "version": "1.0.0",
+  "description": "午餐历史记录查询",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

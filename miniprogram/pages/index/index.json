@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "要吃啥",
+  "usingComponents": {
+    "privacy-popup": "/components/privacy-popup/privacy-popup"
+  }
+}

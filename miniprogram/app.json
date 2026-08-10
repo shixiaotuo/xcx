@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/history/history"
+  ],
+  "window": {
+    "navigationBarTitleText": "要吃啥子",
+    "navigationBarBackgroundColor": "#F5F2EE",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F7F4F0",
+    "backgroundTextStyle": "dark"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于推荐你周边的餐厅店铺"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

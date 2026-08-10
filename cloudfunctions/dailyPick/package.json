@@ -1,0 +1,9 @@
+{
+  "name": "dailyPick",
+  "version": "1.0.0",
+  "description": "生成/返回当天的 3 个餐别推荐，排除昨天选中项",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

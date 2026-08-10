@@ -1,0 +1,9 @@
+{
+  "name": "nearbyShops",
+  "version": "1.0.0",
+  "description": "服务端调用腾讯地图 WebService，返回周边店铺",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
