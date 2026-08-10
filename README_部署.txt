@@ -176,5 +176,41 @@ D:\tmp\XCX\
   index.js 的 wx.getLocation 改 wx.getFuzzyLocation；云函数字段名一致、零改动。
   注：两种方法都仍需发布《用户隐私保护指引》，真机才能授权调用。
 
-（文档更新于 2026-08-10，对应功能：常驻2+随机3、回家吃/点外卖特殊处理、店铺列表综合/距离排序切换、距离格式化、历史记录页、小清新浅色风格、隐私授权弹窗（全局拦截+自定义组件）、主题可切换（6套）、餐别池 34 种随机 + 2 常驻共 36 条；附 getLocation 权限申请模板与 fuzzy 替代方案）
+十二、clone 后配置指引（协作者 / 换新机）
+----------------------------------------------------------------
+本项目已 push 到 GitHub（https://github.com/shixiaotuo/xcx）。clone 后
+无法直接跑，需补齐以下本地/云端配置（这些文件已被 .gitignore 忽略，不会进仓库）：
+
+1. 导入项目
+   - 微信开发者工具 → 导入项目 → 选仓库根目录。
+   - 填你自己的小程序 AppID（仓库里 app.json 的 appid 为占位符，需替换）；
+     或用测试号（功能受限）。
+
+2. 绑定云环境
+   - 顶部「云开发」→ 开通/选择环境，拿到环境 ID。
+   - 把 miniprogram/app.js 里 wx.cloud.init 的 env 改成你的环境 ID。
+   - 若开发者工具提示"请在云函数根目录选择云环境"，编辑
+     project.private.config.json 加：
+       "cloudfunctionRoot": { "cloudfunctions/": "<你的环境ID>" }
+
+3. 部署云函数（关键，否则功能不可用）
+   - 分别右键 cloudfunctions/ 下 5 个函数 →「上传并部署：云端安装依赖」
+     （或「全量上传 node_modules」）。务必选带"安装依赖"，否则丢 wx-server-sdk。
+   - 函数清单：dailyPick / chooseMeal / nearbyShops / initCategories / mealHistory
+
+4. 配置 MAP_KEY 环境变量（周边搜必需）
+   - 云开发控制台 → 云函数 nearbyShops → 环境变量 → 新增
+     MAP_KEY=<你的腾讯位置服务 WebServiceAPI Key>
+   - ⚠️ 仓库代码已去除硬编码 Key，仅靠此环境变量；未配会报"MAP_KEY 未配置"。
+   - 申请地址：腾讯位置服务 console（lbs.qq.com）→ 创建应用 → WebServiceAPI Key。
+
+5. 种入餐别池（首次）
+   - 小程序内触发一次 dailyPick 会自动建当天记录；
+   - 调 initCategories 云函数一键幂等写入 34 随机 + 2 常驻餐别（重复执行安全）。
+
+6. 隐私与权限（发正式版前）
+   - 「开发管理 → 接口设置」开通 getLocation（或改用 fuzzy 免申请，见十一章附）。
+   - 「设置 → 服务内容声明 → 用户隐私保护指引」发布，含"位置信息"用途。
+
+（文档更新于 2026-08-10，对应功能：常驻2+随机3、回家吃/点外卖特殊处理、店铺列表综合/距离排序切换、距离格式化、历史记录页、小清新浅色风格、隐私授权弹窗（全局拦截+自定义组件）、主题可切换（6套）、餐别池 34 种随机 + 2 常驻共 36 条；附 getLocation 权限申请模板与 fuzzy 替代方案、clone 后配置指引）
 ================================================================
