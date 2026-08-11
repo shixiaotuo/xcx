@@ -40,6 +40,10 @@ const DEFAULTS = [
   { name: '炸串', emoji: '🍢', mapKeyword: '炸串' },
   { name: '擀面皮', emoji: '🍜', mapKeyword: '擀面皮' },
   { name: '咖喱饭', emoji: '🍛', mapKeyword: '咖喱饭' },
+  { name: '泡馍', emoji: '🍲', mapKeyword: '泡馍' },
+  { name: '油泼面', emoji: '🍜', mapKeyword: '油泼面' },
+  { name: '担担面', emoji: '🍜', mapKeyword: '担担面' },
+  { name: '三合一', emoji: '🍜', mapKeyword: '三合一面' },
   { name: '回家吃', emoji: '🏠', mapKeyword: '', home: true },
   { name: '点外卖', emoji: '🥡', mapKeyword: '', takeout: true }
 ]
