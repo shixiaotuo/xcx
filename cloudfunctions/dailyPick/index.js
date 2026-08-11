@@ -110,5 +110,5 @@ exports.main = async (event) => {
       ? byId[excludeId].name
       : null
 
-  return { date: today, picks: pickDetails, excludedYesterday: excludedName }
+  return { date: today, picks: pickDetails, excludedYesterday: excludedName, allFoods: foods }
 }
