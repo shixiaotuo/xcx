@@ -31,7 +31,7 @@ Page({
     isHome: false,
     isTakeout: false,
     shops: [],
-    sort: 'default', // 'default' 综合 | 'distance' 距离最近
+    sort: 'distance', // 'distance' 距离最近（默认）
     loading: false,
     rerolling: false,
     location: null,
@@ -200,7 +200,7 @@ Page({
           isHome: false,
           isTakeout: false,
           shops: [],
-          sort: 'default'
+          sort: 'distance'
         })
       },
       fail: (err) => {
@@ -224,7 +224,7 @@ Page({
   onPick(e) {
     const { id, keyword } = e.currentTarget.dataset
     const item = this.data.picks.find((p) => p._id === id)
-    this.setData({ activeId: id, activeName: item ? item.name : '', activeKeyword: keyword, sort: 'default' })
+    this.setData({ activeId: id, activeName: item ? item.name : '', activeKeyword: keyword, sort: 'distance' })
     // 记录今天的选择（用于明天避开）
     wx.cloud.callFunction({ name: 'chooseMeal', data: { catId: id } })
     // 「回家吃」不搜周边店，显示回家提示
@@ -237,15 +237,15 @@ Page({
       this.setData({ isTakeout: true, isHome: false, shops: [] })
       return
     }
-    // 拉取周边店铺（默认综合排序）
+    // 拉取周边店铺（默认按距离最近排序）
     if (this.data.location) {
-      this.loadShops(keyword, 'default')
+      this.loadShops(keyword, 'distance')
     } else {
       wx.showToast({ title: '未获取到定位，无法查周边店', icon: 'none' })
     }
   },
 
-  // 切换排序：综合 / 距离最近
+  // 排序：距离最近（默认）
   onSortChange(e) {
     const sort = e.currentTarget.dataset.sort
     if (sort === this.data.sort) return
@@ -253,7 +253,7 @@ Page({
     this.loadShops(this.data.activeKeyword, sort)
   },
 
-  loadShops(keyword, sort = 'default') {
+  loadShops(keyword, sort = 'distance') {
     this.setData({ loading: true, shops: [], sort })
     wx.cloud.callFunction({
       name: 'nearbyShops',

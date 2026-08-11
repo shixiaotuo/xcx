@@ -52,8 +52,7 @@
   <view class="shops" wx:if="{{shops.length}}">
     <view class="shops-title">附近「{{activeName}}」的店</view>
     <view class="sort-tabs">
-      <view class="sort-tab {{sort === 'default' ? 'sort-active' : ''}}" bindtap="onSortChange" data-sort="default">综合</view>
-      <view class="sort-tab {{sort === 'distance' ? 'sort-active' : ''}}" bindtap="onSortChange" data-sort="distance">距离最近</view>
+      <view class="sort-tab sort-active" bindtap="onSortChange" data-sort="distance">距离最近</view>
     </view>
     <view
       class="shop"
