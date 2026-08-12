@@ -2,7 +2,7 @@
   <view class="topbar">
     <view class="style-btn" bindtap="openThemeSheet">🎨 风格</view>
   </view>
-  <view class="hint">最近 14 天的午餐记录</view>
+  <view class="hint">最近 14 天的吃饭记录</view>
 
   <view class="loading" wx:if="{{loading}}">加载中…</view>
 

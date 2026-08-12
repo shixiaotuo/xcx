@@ -12,23 +12,13 @@ Component({
       const app = getApp()
       if (!wx.onNeedPrivacyAuthorize) return // 低版本基础库不支持，直接跳过
 
-      // 让全局监听能唤醒本页弹窗
+      // 让全局监听能唤醒本页弹窗。
+      // 重要：隐私弹窗【只在用户触发隐私接口时】才弹（如 getLocation ->
+      // onNeedPrivacyAuthorize 回调里调用 showPrivacyPopup）。此时 wx 生成的
+      // resolve 已就绪，用户点「同意」会真正通知微信授权，微信才会重试接口。
+      // 不要在进入页面时用 getPrivacySetting 主动提前弹窗——那时 resolve 还没
+      // 生成，点「同意」无法通知微信，等于"假同意"，会导致正式版后续定位仍失败。
       app.showPrivacyPopup = () => { this.setData({ show: true }) }
-
-      // 处理竞态：首页 onLoad 已触发定位、弹窗待显示
-      if (app.globalData.privacyPending) {
-        this.setData({ show: true })
-      }
-
-      // 首次进入且需要授权时，主动弹窗（即便用户还没触发定位）
-      wx.getPrivacySetting({
-        success: (res) => {
-          if (res.needAuthorization) {
-            app.globalData.privacyPending = true
-            this.setData({ show: true, name: res.privacyContractName || '隐私保护指引' })
-          }
-        }
-      })
     }
   },
 

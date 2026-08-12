@@ -49,7 +49,7 @@
     <view class="fun-btn {{shakeEnabled ? 'fun-on' : ''}}" bindtap="toggleShake">📳 摇一摇</view>
   </view>
 
-  <view class="shops" wx:if="{{shops.length}}">
+  <view class="shops" id="shopSection" wx:if="{{shops.length}}">
     <view class="shops-title">附近「{{activeName}}」的店</view>
     <view class="sort-tabs">
       <view class="sort-tab sort-active" bindtap="onSortChange" data-sort="distance">距离最近</view>

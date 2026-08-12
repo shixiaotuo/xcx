@@ -70,7 +70,7 @@ Page({
         this.onReroll()
       }
     }
-    this.getLocationThenPick()
+    this.loadPicks() // 先加载餐别（无需定位）；定位改由用户点选卡片触发，正式版才允许
   },
 
   onShow() {
@@ -164,16 +164,66 @@ Page({
     else this.stopShake()
   },
 
-  getLocationThenPick() {
+  // 获取定位（须由用户点击手势触发，正式版才允许）。已定位则直接执行回调。
+  // 正式版要求：getLocation 前必须先完成隐私授权，且用户已授予位置权限。
+  // 流程：requirePrivacyAuthorize 触发隐私弹窗（用户同意 -> 隐私组件 resolve） ->
+  //        success 后真正取定位 -> 若位置权限被拒则引导去设置开启。
+  ensureLocation(cb) {
+    if (this.data.location) {
+      if (cb) cb()
+      return
+    }
+    const proceed = () => this.doGetLocation(cb)
+    if (wx.requirePrivacyAuthorize) {
+      wx.requirePrivacyAuthorize({
+        success: proceed,
+        fail: () => {
+          wx.showToast({ title: '需同意隐私授权才能定位', icon: 'none' })
+        }
+      })
+    } else {
+      proceed()
+    }
+  },
+
+  // 真正取定位；处理位置权限被拒时的引导
+  doGetLocation(cb) {
     wx.getLocation({
       type: 'gcj02',
       success: (res) => {
         this.setData({ location: { lat: res.latitude, lng: res.longitude } })
-        this.loadPicks()
+        if (cb) cb()
       },
-      fail: () => {
-        wx.showToast({ title: '定位失败，仅推荐餐别', icon: 'none' })
-        this.loadPicks()
+      fail: (err) => {
+        const msg = (err && err.errMsg) || ''
+        // 位置权限未授权 -> 引导去设置开启
+        if (/auth\s*deny|authorize|permission|scope\.userLocation/i.test(msg)) {
+          wx.showModal({
+            title: '需要位置权限',
+            content: '「要吃啥子」需要获取你的位置来推荐附近店铺，请在设置中允许位置信息。',
+            confirmText: '去设置',
+            cancelText: '仅推荐餐别',
+            success: (r) => {
+              if (r.confirm) {
+                wx.openSetting({
+                  success: (s) => {
+                    if (s.authSetting && s.authSetting['scope.userLocation']) {
+                      this.doGetLocation(cb)
+                    } else {
+                      wx.showToast({ title: '未授权位置，仅推荐餐别', icon: 'none' })
+                    }
+                  },
+                  fail: () => wx.showToast({ title: '未授权位置，仅推荐餐别', icon: 'none' })
+                })
+              } else {
+                wx.showToast({ title: '未授权位置，仅推荐餐别', icon: 'none' })
+              }
+            }
+          })
+        } else {
+          // 其他（如定位信号弱）：不阻断主流程，仅推荐餐别
+          wx.showToast({ title: '定位失败，仅推荐餐别', icon: 'none' })
+        }
       }
     })
   },
@@ -237,12 +287,8 @@ Page({
       this.setData({ isTakeout: true, isHome: false, shops: [] })
       return
     }
-    // 拉取周边店铺（默认按距离最近排序）
-    if (this.data.location) {
-      this.loadShops(keyword, 'distance')
-    } else {
-      wx.showToast({ title: '未获取到定位，无法查周边店', icon: 'none' })
-    }
+    // 拉取周边店铺（默认按距离最近排序）。定位须由用户点击触发，故在 onPick 内获取
+    this.ensureLocation(() => this.loadShops(keyword, 'distance'))
   },
 
   // 排序：距离最近（默认）
@@ -269,7 +315,10 @@ Page({
         if (r.ok) {
           // 预处理距离文本
           const shops = (r.list || []).map((s) => ({ ...s, distText: formatDistance(s.distance) }))
-          this.setData({ shops })
+          this.setData({ shops }, () => {
+            // 选完餐别后自动滚动到附近店铺列表
+            wx.pageScrollTo({ selector: '#shopSection', duration: 300 })
+          })
         } else {
           wx.showToast({ title: r.error || '附近暂无该品类店铺', icon: 'none' })
         }
@@ -393,7 +442,7 @@ Page({
       ctx.fillText((f.levelEmoji || '🔮') + ' ' + (f.level || '今日运势'), 520, 132)
       ctx.fillStyle = p.sub
       ctx.font = '20px sans-serif'
-      ctx.fillText('今日午餐运势', 520, 162)
+      ctx.fillText('今日干饭运势', 520, 162)
 
       // 头部分隔线
       ctx.strokeStyle = p.border
@@ -444,18 +493,7 @@ Page({
       // 箴言
       ctx.fillStyle = p.sub
       ctx.font = 'italic 22px sans-serif'
-      ctx.fillText(f.tip || '饭前不纠结，吃前摇一摇', W / 2, 656)
-
-      // 底部 slogan
-      ctx.strokeStyle = p.border
-      ctx.lineWidth = 1
-      ctx.beginPath()
-      ctx.moveTo(120, 700)
-      ctx.lineTo(480, 700)
-      ctx.stroke()
-      ctx.fillStyle = p.sub
-      ctx.font = '20px sans-serif'
-      ctx.fillText('饭前不纠结，吃前摇一摇', W / 2, 740)
+      ctx.fillText(f.tip || '', W / 2, 656)
 
       wx.canvasToTempFilePath({
         canvas,
