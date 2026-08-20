@@ -18,6 +18,27 @@ Page({
     this.setData({ theme: key, themes: themeUtil.THEMES })
   },
 
+  // 显示右上角「…」菜单的 转发 / 分享到朋友圈 入口
+  onReady() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] })
+  },
+
+  // 转发给好友
+  onShareAppMessage() {
+    return {
+      title: '看看我最近都吃了啥｜要吃啥子',
+      path: 'pages/history/history'
+    }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '看看我最近都吃了啥｜要吃啥子',
+      query: 'from=timeline'
+    }
+  },
+
   openThemeSheet() {
     this.setData({ sheetShow: true })
   },

@@ -45,6 +45,7 @@
   <view class="fun-row">
     <view class="fun-btn" bindtap="openCoin">🪙 抛硬币</view>
     <view class="fun-btn" bindtap="openBlindbox">🎁 盲盒</view>
+    <view class="fun-btn" bindtap="openCustom">🎯 自选</view>
     <view class="fun-btn" bindtap="openShare">📤 分享</view>
     <view class="fun-btn {{shakeEnabled ? 'fun-on' : ''}}" bindtap="toggleShake">📳 摇一摇</view>
   </view>
@@ -129,6 +130,25 @@
     <button class="modal-btn ghost" bindtap="closeBlindbox">关闭</button>
   </view>
 
+  <!-- 自选弹层 -->
+  <view class="sheet-mask" wx:if="{{customShow}}" bindtap="closeCustom"></view>
+  <view class="sheet" wx:if="{{customShow}}" catchtap="noop">
+    <view class="sheet-title">🎯 自选品类</view>
+    <scroll-view scroll-y class="custom-list">
+      <view
+        class="custom-item"
+        wx:for="{{allCats}}"
+        wx:key="_id"
+        bindtap="onCustomPick"
+        data-id="{{item._id}}"
+        data-keyword="{{item.mapKeyword}}">
+        <view class="custom-emoji">{{item.emoji}}</view>
+        <view class="custom-name">{{item.name}}</view>
+        <view class="custom-chevron">›</view>
+      </view>
+    </scroll-view>
+  </view>
+
   <!-- 分享卡弹层 -->
   <view class="sheet-mask" wx:if="{{shareShow}}" bindtap="closeShare"></view>
   <view class="sheet" wx:if="{{shareShow}}" catchtap="noop">
@@ -136,6 +156,7 @@
     <image wx:if="{{shareImg}}" src="{{shareImg}}" class="share-img" mode="widthFix"></image>
     <view wx:else class="empty-tip">生成中…</view>
     <button class="share-save" bindtap="saveShare">保存到相册</button>
+    <button class="share-save" open-type="share">转发给好友</button>
     <button class="modal-btn ghost" bindtap="closeShare">关闭</button>
   </view>
 

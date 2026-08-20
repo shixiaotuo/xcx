@@ -50,6 +50,7 @@ Page({
     blindboxRevealing: false,
     blindboxResult: null,   // {_id,name,emoji,mapKeyword}
     allCats: [],            // 全部餐别（盲盒从全量随机）
+    customShow: false,      // 自选弹层
     shareShow: false,       // 分享卡弹层
     shareImg: ''
   },
@@ -84,6 +85,37 @@ Page({
 
   onUnload() {
     this.stopShake()
+  },
+
+  // 显示右上角「…」菜单的 转发 / 分享到朋友圈 入口
+  onReady() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] })
+  },
+
+  // 组装分享文案（取运势宜吃 / 当日首个推荐）
+  buildShareTitle() {
+    const f = this.data.fortune
+    const pick = (this.data.picks && this.data.picks[0]) || null
+    const tail = '｜吃前摇一摇，今天吃啥帮你定'
+    if (f && f.yi) return `今日宜吃${f.yi}${tail}`
+    if (pick) return `今天推荐吃${pick.name}${tail}`
+    return `要吃啥子${tail}`
+  },
+
+  // 转发给好友（右上角菜单「转发」或 open-type="share" 按钮触发）
+  onShareAppMessage() {
+    return {
+      title: this.buildShareTitle(),
+      path: 'pages/index/index'
+    }
+  },
+
+  // 分享到朋友圈（仅右上角菜单「分享到朋友圈」触发）
+  onShareTimeline() {
+    return {
+      title: this.buildShareTitle(),
+      query: 'from=timeline'
+    }
   },
 
   // 应用已保存主题（导航栏 + 窗口背景 + 数据）
@@ -273,7 +305,7 @@ Page({
 
   onPick(e) {
     const { id, keyword } = e.currentTarget.dataset
-    const item = this.data.picks.find((p) => p._id === id)
+    const item = this.data.picks.find((p) => p._id === id) || this.data.allCats.find((p) => p._id === id)
     this.setData({ activeId: id, activeName: item ? item.name : '', activeKeyword: keyword, sort: 'distance' })
     // 记录今天的选择（用于明天避开）
     wx.cloud.callFunction({ name: 'chooseMeal', data: { catId: id } })
@@ -382,6 +414,23 @@ Page({
   },
   closeBlindbox() {
     this.setData({ blindboxShow: false })
+  },
+
+  // ===== 自选模式（从全部品类中手动选）=====
+  openCustom() {
+    if (!this.data.allCats.length) {
+      wx.showToast({ title: '品类加载中，稍后再试', icon: 'none' })
+      return
+    }
+    this.setData({ customShow: true })
+  },
+  onCustomPick(e) {
+    const { id, keyword } = e.currentTarget.dataset
+    this.setData({ customShow: false })
+    this.onPick({ currentTarget: { dataset: { id, keyword } } })
+  },
+  closeCustom() {
+    this.setData({ customShow: false })
   },
 
   // ===== 分享卡片 =====
