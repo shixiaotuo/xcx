@@ -38,6 +38,7 @@
       <view class="name">{{item.name}}</view>
       <view class="chevron" wx:if="{{activeId === item._id}}">›</view>
     </view>
+    <view class="pick-hint" wx:if="{{isCustom && activeName}}">🎯 你自选了：{{activeName}}</view>
   </view>
 
   <button class="reroll" bindtap="onReroll" loading="{{rerolling}}">🎲 换一批</button>

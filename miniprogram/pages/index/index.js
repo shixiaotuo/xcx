@@ -28,6 +28,7 @@ Page({
     activeId: '',
     activeName: '',
     activeKeyword: '',
+    isCustom: false, // 当前选择是否来自「自选」手工录入
     isHome: false,
     isTakeout: false,
     shops: [],
@@ -280,6 +281,7 @@ Page({
           activeId: '',
           activeName: '',
           activeKeyword: '',
+          isCustom: false,
           isHome: false,
           isTakeout: false,
           shops: [],
@@ -307,7 +309,7 @@ Page({
   onPick(e) {
     const { id, keyword } = e.currentTarget.dataset
     const item = this.data.picks.find((p) => p._id === id) || this.data.allCats.find((p) => p._id === id)
-    this.setData({ activeId: id, activeName: item ? item.name : '', activeKeyword: keyword, sort: 'distance' })
+    this.setData({ activeId: id, activeName: item ? item.name : '', activeKeyword: keyword, isCustom: false, sort: 'distance' })
     // 记录今天的选择（用于明天避开）
     wx.cloud.callFunction({ name: 'chooseMeal', data: { catId: id } })
     // 「回家吃」不搜周边店，显示回家提示
@@ -435,6 +437,7 @@ Page({
       activeId: '',
       activeName: kw,
       activeKeyword: kw,
+      isCustom: true,
       isHome: false,
       isTakeout: false,
       shops: [],

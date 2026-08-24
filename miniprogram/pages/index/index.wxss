@@ -54,6 +54,16 @@
   flex-direction: column;
   gap: 12rpx;
 }
+.pick-hint {
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  color: var(--text-sub);
+  background: var(--primary-soft);
+  border: var(--border-w) solid var(--primary-border);
+  border-radius: 16rpx;
+  padding: 12rpx 20rpx;
+  text-align: center;
+}
 .card {
   background: var(--card);
   border: var(--border-w) solid var(--border);
