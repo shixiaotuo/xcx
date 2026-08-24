@@ -282,12 +282,14 @@
 .custom-input {
   width: 100%;
   box-sizing: border-box;
+  min-height: 104rpx;
   background: var(--card);
   border: var(--border-w) solid var(--border);
-  border-radius: 20rpx;
-  padding: 26rpx 28rpx;
-  margin-bottom: 22rpx;
-  font-size: 32rpx;
+  border-radius: 24rpx;
+  padding: 30rpx 32rpx;
+  margin-bottom: 24rpx;
+  font-size: 36rpx;
+  line-height: 1.4;
   font-weight: 600;
   color: var(--text);
   box-shadow: var(--shadow);
