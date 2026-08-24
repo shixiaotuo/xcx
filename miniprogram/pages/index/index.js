@@ -51,6 +51,7 @@ Page({
     blindboxResult: null,   // {_id,name,emoji,mapKeyword}
     allCats: [],            // 全部餐别（盲盒从全量随机）
     customShow: false,      // 自选弹层
+    customText: '',         // 自选手工录入的内容
     shareShow: false,       // 分享卡弹层
     shareImg: ''
   },
@@ -416,18 +417,33 @@ Page({
     this.setData({ blindboxShow: false })
   },
 
-  // ===== 自选模式（从全部品类中手动选）=====
+  // ===== 自选模式（用户手工录入关键词）=====
   openCustom() {
-    if (!this.data.allCats.length) {
-      wx.showToast({ title: '品类加载中，稍后再试', icon: 'none' })
+    this.setData({ customShow: true, customText: '' })
+  },
+  onCustomInput(e) {
+    this.setData({ customText: e.detail.value })
+  },
+  confirmCustom() {
+    const kw = (this.data.customText || '').trim()
+    if (!kw) {
+      wx.showToast({ title: '请输入想吃的', icon: 'none' })
       return
     }
-    this.setData({ customShow: true })
-  },
-  onCustomPick(e) {
-    const { id, keyword } = e.currentTarget.dataset
-    this.setData({ customShow: false })
-    this.onPick({ currentTarget: { dataset: { id, keyword } } })
+    this.setData({
+      customShow: false,
+      activeId: '',
+      activeName: kw,
+      activeKeyword: kw,
+      isHome: false,
+      isTakeout: false,
+      shops: [],
+      sort: 'distance',
+      coinHitId: '',
+      blindboxResult: null
+    })
+    // 定位须由用户点击手势触发，点确认按钮即合规
+    this.ensureLocation(() => this.loadShops(kw, 'distance'))
   },
   closeCustom() {
     this.setData({ customShow: false })

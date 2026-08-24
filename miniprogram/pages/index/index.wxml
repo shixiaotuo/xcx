@@ -130,23 +130,20 @@
     <button class="modal-btn ghost" bindtap="closeBlindbox">关闭</button>
   </view>
 
-  <!-- 自选弹层 -->
+  <!-- 自选弹层（手工录入） -->
   <view class="sheet-mask" wx:if="{{customShow}}" bindtap="closeCustom"></view>
   <view class="sheet" wx:if="{{customShow}}" catchtap="noop">
-    <view class="sheet-title">🎯 自选品类</view>
-    <scroll-view scroll-y class="custom-list">
-      <view
-        class="custom-item"
-        wx:for="{{allCats}}"
-        wx:key="_id"
-        bindtap="onCustomPick"
-        data-id="{{item._id}}"
-        data-keyword="{{item.mapKeyword}}">
-        <view class="custom-emoji">{{item.emoji}}</view>
-        <view class="custom-name">{{item.name}}</view>
-        <view class="custom-chevron">›</view>
-      </view>
-    </scroll-view>
+    <view class="sheet-title">🎯 自选录入</view>
+    <input
+      class="custom-input"
+      placeholder="想吃什么？输入品类或店名"
+      placeholder-class="custom-ph"
+      value="{{customText}}"
+      bindinput="onCustomInput"
+      confirm-type="search"
+      bindconfirm="confirmCustom" />
+    <button class="modal-btn" bindtap="confirmCustom">搜附近店</button>
+    <button class="modal-btn ghost" bindtap="closeCustom">关闭</button>
   </view>
 
   <!-- 分享卡弹层 -->
