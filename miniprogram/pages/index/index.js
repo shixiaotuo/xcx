@@ -41,7 +41,7 @@ Page({
     sheetShow: false,
     // ===== 新功能 =====
     fortune: null,          // 今日运势对象
-    shakeEnabled: true,     // 摇一摇开关
+    shakeEnabled: false,    // 摇一摇开关（默认关闭，用户点按钮开启）
     lastShake: 0,
     coinShow: false,        // 抛硬币弹层
     coinFlipping: false,
